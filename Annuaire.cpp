@@ -19,7 +19,7 @@ using namespace std;
 //! \exception	logic_error si le fichier p_fichierEntree n'est pas ouvert correctement.
 Annuaire::Annuaire(std::ifstream & p_fichierEntree)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief pour inscrire une personne dans l'annuaire
@@ -27,7 +27,7 @@ Annuaire::Annuaire(std::ifstream & p_fichierEntree)
 //! \param[in] p_adresse de la personne à inscrire
 void Annuaire::inscrire(const Personne & p_personne, const Adresse& p_adresse)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief ajoute un enfant et un parent dans l'arbre généalogique du même nom que le parent.
@@ -42,7 +42,7 @@ void Annuaire::inscrire(const Personne & p_personne, const Adresse& p_adresse)
 void Annuaire::ajouterParentEnfant(const Personne & p_parent,
 		const Personne & p_enfant)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \fn std::ostream & Annuaire::operator <<(std::ostream & p_out, const Annuaire & p_annuaire)
@@ -54,6 +54,6 @@ void Annuaire::ajouterParentEnfant(const Personne & p_parent,
 //! \return un flux de sortie pour les appel en cascade.
 std::ostream & operator <<(std::ostream & p_out, const Annuaire & p_annuaire)
 {
-
+	throw exception("Not yet implemented");
 }
 

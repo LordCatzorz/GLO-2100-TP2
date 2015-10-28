@@ -16,7 +16,7 @@ using namespace std;
 //! \param [in] p_ville : la ville où se situe l'adresse
 Adresse::Adresse(int p_numero, const string& p_rue, const string& p_ville)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief surcharge de l'opérateur ==
@@ -24,7 +24,7 @@ Adresse::Adresse(int p_numero, const string& p_rue, const string& p_ville)
 //! \return un booléen indiquant si les deux adresses sont égales ou non
 bool Adresse::operator==(const Adresse& p_adresse) const
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief surcharge de l'opérateur << d'écriture dans une ostream
@@ -33,25 +33,25 @@ bool Adresse::operator==(const Adresse& p_adresse) const
 //! \return le stream dans laquelle on a écrit l'adresse
 ostream& operator<<(ostream& p_os, const Adresse& p_adresse)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief Retourne le numéro de la rue
 //! \return m_numero
 int Adresse::reqNumero() const
 {
-
+	throw exception("Not yet implemented");
 }
 //! \brief Retourne le nom de la rue
 //! \return m_rue
 string Adresse::reqRue() const
 {
-
+	throw exception("Not yet implemented");
 }
 //! \brief Retourne la ville de l'adresse
 //! \return m_ville
 string Adresse::reqVille() const
 {
-
+	throw exception("Not yet implemented");
 }
 

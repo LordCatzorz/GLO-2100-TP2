@@ -1,3 +1,9 @@
 /Debug/
 *.project
 *.cproject
+*.opensdf
+*.sdf
+*.sln
+*.v11.suo
+*.vcxproj
+*.vcxproj.filters

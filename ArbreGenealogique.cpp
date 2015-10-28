@@ -14,37 +14,37 @@ using namespace std;
 //! \brief Constructeur sans paramètre
 ArbreGenealogique::ArbreGenealogique()
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief constructeur à un paramètre
 ArbreGenealogique::ArbreGenealogique(pEntree p_personne_it)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief constructeur de copie
 ArbreGenealogique::ArbreGenealogique(const ArbreGenealogique & p_source)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief Destructeur
 ArbreGenealogique::~ArbreGenealogique()
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief surcharge de l'opérateur =
 const ArbreGenealogique & ArbreGenealogique::operator=(const ArbreGenealogique & p_source)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief retourne le nom de l'arbre généalogique
 string ArbreGenealogique::reqNom() const
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief Ajouter un enfant (ou possiblement son parent) dans un arbre genealogique
@@ -61,7 +61,7 @@ string ArbreGenealogique::reqNom() const
 //! \exception logic_error si le parent n'est pas dans l'arbreGene et que son enfant n'est pas l'ancêtre
 void ArbreGenealogique::ajouterEnfant(pEntree p_parent_it, pEntree p_enfant_it)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief opérateur surcharge de sortie
@@ -69,7 +69,7 @@ void ArbreGenealogique::ajouterEnfant(pEntree p_parent_it, pEntree p_enfant_it)
 std::ostream & operator <<(std::ostream & p_out,
 		const ArbreGenealogique & p_arbreG)
 {
-
+	throw exception("Not yet implemented");
 }
 
 //! \brief permet de savoir si une personne appartient à l'arbre
@@ -78,7 +78,7 @@ std::ostream & operator <<(std::ostream & p_out,
 //! \return vrai si la personne est dans l'arbre, faux sinon.
 bool ArbreGenealogique::appartient(pEntree p_personne_it) const
 {
-
+	throw exception("Not yet implemented");
 }
 
 
