@@ -40,6 +40,7 @@ ostream& operator<<(ostream& p_os, const Adresse& p_adresse)
 	p_os << p_adresse.reqNumero() << ", " 
 		 << p_adresse.reqRue()  << " "
 		 << p_adresse.reqVille();
+	return p_os;
 }
 
 //! \brief Retourne le numéro de la rue
