@@ -28,7 +28,6 @@ public:
 	int reqDateNaissance() const;
     std::string reqNom() const;
     std::string reqPrenom() const;
-    Personne* reqConjoint() const;
 private:
 	std::string m_nom;
 	std::string m_prenom;
