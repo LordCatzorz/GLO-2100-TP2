@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include "Personne.h"
 #include "Adresse.h"
+#include "ContratException.h";
 
 /**
  * \class ArbreGenealogique
@@ -56,6 +57,12 @@ private:
 	Noeud * m_racine; //!< La m_racine de l'arbre généalogique: pointe sur le Noeud de l'ancêtre
 	std::string m_nom;//!< Le nom de l'arbre généalogique (= nom de l'ancêtre)
 
+	friend std::ostream& operator <<(std::ostream& p_out, const ArbreGenealogique::Noeud* p_noeud);
+	const bool appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree& p_personne_it) const;
+	const bool appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree& p_personne_it, bool p_recursif) const;
+	static const bool sontEgaux(const Personne& p_personneA, const Personne& p_personneB);
+	Noeud * trouverPositionEntree(Noeud * p_departRecherche, const pEntree p_personne_it) const; 
+	void supprimerNoeudEtSousNoeud(Noeud* p_noeud);
 };
 
 #endif /* ARBREGENEALOGIQUE_H_ */
