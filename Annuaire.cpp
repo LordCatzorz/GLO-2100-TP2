@@ -156,11 +156,12 @@ void Annuaire::ajouterParentEnfant(const Personne & p_parent,
 std::ostream & operator <<(std::ostream & p_out, const Annuaire & p_annuaire)
 {
 	PRECONDITION(!p_annuaire.m_bottin.empty());
-	p_out << "Bottin : " << std::endl;
+	p_out << "bottin : " << std::endl;
 	for(std::map<Personne, Adresse>::const_iterator iter = p_annuaire.m_bottin.begin();iter != p_annuaire.m_bottin.end(); iter++)
 	{
 		p_out << std::endl << iter->first <<endl << iter->second;
 	}
+	p_out << std::endl << std::endl << "arbres généalogiques :" << std::endl;
 	for(std::list<ArbreGenealogique>::const_iterator iter = p_annuaire.m_listeArbreGene.begin(); iter != p_annuaire.m_listeArbreGene.end(); iter++)
 	{
 		p_out << endl << *iter;
