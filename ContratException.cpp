@@ -22,11 +22,11 @@ ContratException::ContratException(const std::string & p_fichier,
 		logic_error(""), m_expression(p_expression), m_fichier(p_fichier), m_type(
 				p_type), m_ligne(p_ligne) {
 	ostringstream os;
-	os << endl;
-	os << "Message : " << m_type << endl;
-	os << "Fichier : " << m_fichier << endl;
-	os << "Ligne   : " << m_ligne << endl;
-	os << "Test    : " << m_expression << endl;
+	os << std::endl;
+	os << "Message : " << m_type << std::endl;
+	os << "Fichier : " << m_fichier << std::endl;
+	os << "Ligne   : " << m_ligne << std::endl;
+	os << "Test    : " << m_expression << std::endl;
 	m_message = os.str();
 }
 /**

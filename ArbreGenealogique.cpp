@@ -29,21 +29,19 @@ ArbreGenealogique::ArbreGenealogique(pEntree p_personne_it)
 ArbreGenealogique::ArbreGenealogique(const ArbreGenealogique & p_source)
 {
 	this->m_nom = p_source.reqNom();
-	this->m_racine = p_source.m_racine;
+	this->m_racine = this->copierPronfondementNoeud(p_source.m_racine);
+
 }
 
-//! \brief Destructeur
 ArbreGenealogique::~ArbreGenealogique()
 {
-	throw exception("Not Implemented Yet");
+	this->supprimerNoeudEtSousNoeud(this->m_racine);
 }
 
 //! \brief surcharge de l'opérateur =
 const ArbreGenealogique & ArbreGenealogique::operator=(const ArbreGenealogique & p_source)
 {
-	this->m_racine = p_source.m_racine;
-	this->m_nom = p_source.m_nom;
-	return *this;
+	return ArbreGenealogique(p_source);
 }
 
 //! \brief retourne le nom de l'arbre généalogique
@@ -70,11 +68,10 @@ void ArbreGenealogique::ajouterEnfant(pEntree p_parent_it, pEntree p_enfant_it)
 	{
 		throw logic_error("Le nom du parent doit être le même que le nom de l'arbre");
 	}
-	if (p_parent_it->first < p_enfant_it->first)
+	if (p_parent_it->first.reqDateNaissance() > p_enfant_it->first.reqDateNaissance())
 	{
-		throw logic_error("Le parent ne peut pas être plus petit que l'enfant");
+		throw logic_error("Le parent ne peut pas être né après l'enfant");
 	}
-
 	if(this->appartient(p_parent_it)) // Le parent est dans l'arbre
 	{
 		if (!this->appartient(p_enfant_it)) // Si l'enfant n'existe pas.
@@ -84,10 +81,10 @@ void ArbreGenealogique::ajouterEnfant(pEntree p_parent_it, pEntree p_enfant_it)
 			noeudParent->m_enfants.push_front(noeudEnfant);
 			noeudParent->m_enfants.sort();
 		}
-		else
+		/*else
 		{
 			throw logic_error("L'enfant existe déjà ailleur dans l'arbre");
-		}
+		}*/
 	}
 	else
 	{
@@ -109,7 +106,7 @@ void ArbreGenealogique::ajouterEnfant(pEntree p_parent_it, pEntree p_enfant_it)
 //!		affichage des noeuds de l,arbre en pré-ordre
 std::ostream & operator <<(std::ostream & p_out, const ArbreGenealogique & p_arbreG)
 {
-	p_out << p_arbreG.reqNom() << "affiché en pré-ordre:";
+	p_out << "Arbre " << p_arbreG.reqNom() << " affiché en pré-ordre:";
 	p_out << p_arbreG.m_racine;
 	return p_out;
 }
@@ -120,7 +117,6 @@ std::ostream & operator <<(std::ostream & p_out, const ArbreGenealogique & p_arb
 //! \return vrai si la personne est dans l'arbre, faux sinon.
 bool ArbreGenealogique::appartient(pEntree p_personne_it) const
 {
-	PRECONDITION(p_personne_it != pEntree());
 	PRECONDITION(p_personne_it->first.reqDateNaissance() != NULL);
 	PRECONDITION(p_personne_it->first.reqNom() != "");
 	PRECONDITION(p_personne_it->first.reqPrenom() != "");
@@ -136,10 +132,10 @@ bool ArbreGenealogique::appartient(pEntree p_personne_it) const
 //!		affiche le nom du noeud suivi de ses enfants en pré-ordre s'il y en a.
 std::ostream& operator <<(std::ostream& p_out, const ArbreGenealogique::Noeud* p_noeud)
 {
-	p_out << p_noeud->m_personne_it;
+	p_out << std::endl << p_noeud->m_personne_it->first;
 	for(std::list<ArbreGenealogique::Noeud *>::const_iterator iter = p_noeud->m_enfants.begin(); iter != p_noeud->m_enfants.end(); iter++)
 	{
-		p_out << endl << *iter;
+		p_out << *iter;
 	}
 	return p_out;
 }
@@ -154,11 +150,11 @@ const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeu
 {
 	bool retour = false;
 
-	if (!this->sontEgaux(p_noeud->m_personne_it->first, p_personne_it->first))
+	if (this->sontEgaux(p_noeud->m_personne_it->first, p_personne_it->first))
 	{
 		retour = true;
 	}
-	else if (p_personne_it->first < p_noeud->m_personne_it->first) // La personne rechercher est encore plus petite.
+	else if (p_personne_it->first.reqDateNaissance() > p_noeud->m_personne_it->first.reqDateNaissance()) // La personne rechercher est né après cette personne.
 	{
 		for(std::list<ArbreGenealogique::Noeud *>::const_iterator iter = p_noeud->m_enfants.begin(); iter != p_noeud->m_enfants.end() && retour == false; iter++)
 		{
@@ -196,11 +192,11 @@ ArbreGenealogique::Noeud * ArbreGenealogique::trouverPositionEntree(ArbreGenealo
 {
 	Noeud* retour = NULL;
 
-	if (!this->sontEgaux(p_departRecherche->m_personne_it->first, p_personne_it->first))
+	if (this->sontEgaux(p_departRecherche->m_personne_it->first, p_personne_it->first))
 	{
 		retour = p_departRecherche;
 	}
-	else if (p_personne_it->first < p_departRecherche->m_personne_it->first) // La personne rechercher est encore plus petite.
+	else if (p_personne_it->first.reqDateNaissance() > p_departRecherche->m_personne_it->first.reqDateNaissance()) // La personne rechercher est encore plus jeune.
 	{
 		for(std::list<ArbreGenealogique::Noeud *>::const_iterator iter = p_departRecherche->m_enfants.begin(); iter != p_departRecherche->m_enfants.end() && retour == NULL; iter++)
 		{
@@ -208,6 +204,28 @@ ArbreGenealogique::Noeud * ArbreGenealogique::trouverPositionEntree(ArbreGenealo
 		}
 	}
 	return retour;
+}
+
+void ArbreGenealogique::supprimerNoeudEtSousNoeud(ArbreGenealogique::Noeud* p_noeud)
+{
+	for(std::list<Noeud*>::iterator iter = p_noeud->m_enfants.begin(); iter != p_noeud->m_enfants.end();iter++)
+	{
+		delete *iter;
+		*iter = NULL;
+	}
+	delete p_noeud;
+	p_noeud = NULL;
+}
+
+ArbreGenealogique::Noeud* ArbreGenealogique::copierPronfondementNoeud(Noeud* p_noeud)
+{
+	Noeud* noeudCopie = new Noeud(p_noeud->m_personne_it);
+	for(std::list<Noeud*>::iterator iter = p_noeud->m_enfants.begin(); iter != p_noeud->m_enfants.end();iter++)
+	{
+		noeudCopie->m_enfants.push_back(copierPronfondementNoeud(*iter));
+	}
+	return noeudCopie;
+
 }
 
 

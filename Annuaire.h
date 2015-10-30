@@ -15,7 +15,7 @@
 #include "ArbreGenealogique.h"
 #include "Personne.h"
 #include "Adresse.h"
-
+#include <sstream>
 
 class Annuaire
 {
@@ -27,6 +27,7 @@ public:
 			const Annuaire& p_annuaire);
 
 private:
+	int convertirStringInt(std::string p_string);
 	std::map<Personne,Adresse> m_bottin;
 	std::list<ArbreGenealogique> m_listeArbreGene;//! La liste contenant les arbres généalogique par famille
 };

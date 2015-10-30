@@ -51,6 +51,7 @@ private:
 		std::list<Noeud *> m_enfants; /*!< Liste des enfants de cette personne*/
 		Noeud(pEntree p_personne_it) : m_personne_it(p_personne_it)
 		{
+			this->m_enfants = std::list<Noeud*>();
 		}
 	};
 
@@ -63,6 +64,7 @@ private:
 	static const bool sontEgaux(const Personne& p_personneA, const Personne& p_personneB);
 	Noeud * trouverPositionEntree(Noeud * p_departRecherche, const pEntree p_personne_it) const; 
 	void supprimerNoeudEtSousNoeud(Noeud* p_noeud);
+	Noeud* copierPronfondementNoeud(Noeud* p_noeud);
 };
 
 #endif /* ARBREGENEALOGIQUE_H_ */

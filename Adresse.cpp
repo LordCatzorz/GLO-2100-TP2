@@ -38,7 +38,7 @@ bool Adresse::operator==(const Adresse& p_adresse) const
 ostream& operator<<(ostream& p_os, const Adresse& p_adresse)
 {
 	p_os << p_adresse.reqNumero() << ", " 
-		 << p_adresse.reqRue()  << endl
+		 << p_adresse.reqRue()  << std::endl
 		 << p_adresse.reqVille();
 	return p_os;
 }
