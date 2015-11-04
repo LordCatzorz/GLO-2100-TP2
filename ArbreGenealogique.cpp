@@ -116,13 +116,10 @@ std::ostream & operator <<(std::ostream & p_out, const ArbreGenealogique & p_arb
 //! \return vrai si la personne est dans l'arbre, faux sinon.
 bool ArbreGenealogique::appartient(pEntree p_personne_it) const
 {
-	PRECONDITION(p_personne_it->first.reqDateNaissance() != NULL);
-	PRECONDITION(p_personne_it->first.reqNom() != "");
-	PRECONDITION(p_personne_it->first.reqPrenom() != "");
-
-	PRECONDITION(p_personne_it->second.reqNumero() != NULL);
-	PRECONDITION(p_personne_it->second.reqRue() != "");
-	PRECONDITION(p_personne_it->second.reqVille() != "");
+	if(p_personne_it._Ptr == NULL)
+	{
+		throw new invalid_argument("p_personne_it est NULL");
+	}
 
 	return this->appartient(this->m_racine, p_personne_it);
 }
@@ -147,6 +144,15 @@ std::ostream& operator <<(std::ostream& p_out, const ArbreGenealogique::Noeud* p
 //! \return vrai si la personne est dans l'arbre, faux sinon.
 const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree& p_personne_it) const
 {
+	if (p_noeud == NULL)
+	{
+		throw new invalid_argument("p_noeud est NULL");
+	}
+	if (p_personne_it._Ptr == NULL)
+	{
+		throw new invalid_argument("p_personne_it est NULL");
+	}
+
 	bool retour = false;
 
 	if (p_noeud->m_personne_it == p_personne_it)
@@ -163,8 +169,24 @@ const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeu
 	return retour;
 }
 
+//! \brief permet de savoir si une personne à un noueud ou un enfant d'un noeud
+//! \param[in] p_noeud le noeud a chercher
+//! \param[in] p_personne_it la personne recherchée.
+//! \param[in] recursif indique s'il faut poursuivre la recherche dans les noeuds enfants des enfants.
+//! \pre p_noeud non nulle
+//! \pre p_personne_it non nulle
+//! \return vrai si la personne est dans l'arbre, faux sinon.
 const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree& p_personne_it, bool p_recursif) const
 {
+	if (p_noeud == NULL)
+	{
+		throw new invalid_argument("p_noeud est NULL");
+	}
+	if (p_personne_it._Ptr == NULL)
+	{
+		throw new invalid_argument("p_personne_it est NULL");
+	}
+
 	bool retour = false;
 
 	if (p_recursif)
@@ -181,8 +203,23 @@ const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeu
 	return retour;
 }
 
+//! \brief permet d'obtenir le pointeur de noeud qui contient un élément
+//! \param[in] p_departRecherche le noeud où l'on commence la recherche récursive
+//! \param[in] p_personne_it la personne recherchée.
+//! \pre p_noeud non nulle
+//! \pre p_personne_it non nulle
+//! \return le pointeur de noeud de l'élément ou NULL si aucun noeud n'est trouvé.
 ArbreGenealogique::Noeud * ArbreGenealogique::trouverPositionEntree(ArbreGenealogique::Noeud * p_departRecherche, const ArbreGenealogique::pEntree p_personne_it) const
 {
+	if (p_departRecherche == NULL)
+	{
+		throw new invalid_argument("p_departRecherche est NULL");
+	}
+	if (p_personne_it._Ptr == NULL)
+	{
+		throw new invalid_argument("p_personne_it est NULL");
+	}
+
 	Noeud* retour = NULL;
 
 	if (p_departRecherche->m_personne_it == p_personne_it)
@@ -199,26 +236,41 @@ ArbreGenealogique::Noeud * ArbreGenealogique::trouverPositionEntree(ArbreGenealo
 	return retour;
 }
 
+//! \brief supprime un noeud ainsi que tous ces noeuds enfants.
+//! \param[in] p_noeud le noeud à supprimer
+//! \pre p_noeud non nulle
 void ArbreGenealogique::supprimerNoeudEtSousNoeud(ArbreGenealogique::Noeud* p_noeud)
 {
+	if (p_noeud == NULL)
+	{
+		throw new invalid_argument("p_noeud est NULL");
+	}
+
 	for(std::list<Noeud*>::iterator iter = p_noeud->m_enfants.begin(); iter != p_noeud->m_enfants.end();iter++)
 	{
-		delete *iter;
-		*iter = NULL;
+		supprimerNoeudEtSousNoeud(*iter);
 	}
 	delete p_noeud;
 	p_noeud = NULL;
 }
 
+//! \brief effectue une copie profonde du noeud
+//! \param[in] p_noeud le noeud à copier
+//! \pre p_noeud non nulle
+//! \return la copie du noeud.
 ArbreGenealogique::Noeud* ArbreGenealogique::copierPronfondementNoeud(Noeud* p_noeud)
 {
+	if (p_noeud == NULL)
+	{
+		throw new invalid_argument("p_noeud est NULL");
+	}
+
 	Noeud* noeudCopie = new Noeud(p_noeud->m_personne_it);
 	for(std::list<Noeud*>::iterator iter = p_noeud->m_enfants.begin(); iter != p_noeud->m_enfants.end();iter++)
 	{
 		noeudCopie->m_enfants.push_back(copierPronfondementNoeud(*iter));
 	}
 	return noeudCopie;
-
 }
 
 
