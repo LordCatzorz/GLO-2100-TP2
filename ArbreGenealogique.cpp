@@ -82,7 +82,7 @@ void ArbreGenealogique::ajouterEnfant(pEntree p_parent_it, pEntree p_enfant_it)
 		}
 		else
 		{
-			cout << "L'enfant " << p_enfant_it << " se trouve déjà dans cet arbre généalogique, ajout refusé" << std::endl;
+			cout << "L'enfant " << p_enfant_it->first << " se trouve déjà dans cet arbre généalogique, ajout refusé" << std::endl;
 		}
 	}
 	else
