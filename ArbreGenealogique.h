@@ -58,8 +58,8 @@ private:
 	std::string m_nom;//!< Le nom de l'arbre généalogique (= nom de l'ancêtre)
 
 	friend std::ostream& operator <<(std::ostream& p_out, const ArbreGenealogique::Noeud* p_noeud);
-	const bool appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree& p_personne_it) const;
-	const bool appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree& p_personne_it, bool p_recursif) const;
+	const bool appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree p_personne_it) const;
+	const bool appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree p_personne_it, bool p_recursif) const;
 	Noeud * trouverPositionEntree(Noeud * p_departRecherche, const pEntree p_personne_it) const; 
 	void supprimerNoeudEtSousNoeud(Noeud* p_noeud);
 	Noeud* copierPronfondementNoeud(Noeud* p_noeud);

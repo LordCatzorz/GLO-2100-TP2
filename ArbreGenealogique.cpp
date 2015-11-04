@@ -116,7 +116,7 @@ std::ostream & operator <<(std::ostream & p_out, const ArbreGenealogique & p_arb
 //! \return vrai si la personne est dans l'arbre, faux sinon.
 bool ArbreGenealogique::appartient(pEntree p_personne_it) const
 {
-	if(p_personne_it._Ptr == NULL)
+	if(&p_personne_it == NULL)
 	{
 		throw new invalid_argument("p_personne_it est NULL");
 	}
@@ -142,13 +142,13 @@ std::ostream& operator <<(std::ostream& p_out, const ArbreGenealogique::Noeud* p
 //! \pre p_noeud non nulle
 //! \pre p_personne_it non nulle
 //! \return vrai si la personne est dans l'arbre, faux sinon.
-const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree& p_personne_it) const
+const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree p_personne_it) const
 {
 	if (p_noeud == NULL)
 	{
 		throw new invalid_argument("p_noeud est NULL");
 	}
-	if (p_personne_it._Ptr == NULL)
+	if (&p_personne_it == NULL)
 	{
 		throw new invalid_argument("p_personne_it est NULL");
 	}
@@ -176,13 +176,13 @@ const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeu
 //! \pre p_noeud non nulle
 //! \pre p_personne_it non nulle
 //! \return vrai si la personne est dans l'arbre, faux sinon.
-const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree& p_personne_it, bool p_recursif) const
+const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeud, const ArbreGenealogique::pEntree p_personne_it, bool p_recursif) const
 {
 	if (p_noeud == NULL)
 	{
 		throw new invalid_argument("p_noeud est NULL");
 	}
-	if (p_personne_it._Ptr == NULL)
+	if (&p_personne_it == NULL)
 	{
 		throw new invalid_argument("p_personne_it est NULL");
 	}
@@ -215,7 +215,7 @@ ArbreGenealogique::Noeud * ArbreGenealogique::trouverPositionEntree(ArbreGenealo
 	{
 		throw new invalid_argument("p_departRecherche est NULL");
 	}
-	if (p_personne_it._Ptr == NULL)
+	if (&p_personne_it == NULL)
 	{
 		throw new invalid_argument("p_personne_it est NULL");
 	}
