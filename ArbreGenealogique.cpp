@@ -78,21 +78,20 @@ void ArbreGenealogique::ajouterEnfant(pEntree p_parent_it, pEntree p_enfant_it)
 		{
 			Noeud* noeudParent = this->trouverPositionEntree(this->m_racine, p_parent_it);
 			Noeud* noeudEnfant = new Noeud(p_enfant_it);
-			noeudParent->m_enfants.push_front(noeudEnfant);
-			noeudParent->m_enfants.sort();
+			noeudParent->m_enfants.push_back(noeudEnfant);
 		}
-		/*else
+		else
 		{
-			throw logic_error("L'enfant existe déjà ailleur dans l'arbre");
-		}*/
+			cout << "L'enfant " << p_enfant_it << " se trouve déjà dans cet arbre généalogique, ajout refusé" << std::endl;
+		}
 	}
 	else
 	{
-		if (this->sontEgaux(this->m_racine->m_personne_it->first, p_enfant_it->first)) // L'enfant est à la racine.
+		if (this->m_racine->m_personne_it == p_enfant_it) // L'enfant est à la racine.
 		{
 			Noeud* noeudParent = new Noeud(p_parent_it);
-			noeudParent->m_enfants.push_front(this->m_racine);
-			this->m_racine= noeudParent;
+			noeudParent->m_enfants.push_back(this->m_racine);
+			this->m_racine = noeudParent;
 		}
 		else
 		{
@@ -150,11 +149,11 @@ const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeu
 {
 	bool retour = false;
 
-	if (this->sontEgaux(p_noeud->m_personne_it->first, p_personne_it->first))
+	if (p_noeud->m_personne_it == p_personne_it)
 	{
 		retour = true;
 	}
-	else if (p_personne_it->first.reqDateNaissance() > p_noeud->m_personne_it->first.reqDateNaissance()) // La personne rechercher est né après cette personne.
+	else
 	{
 		for(std::list<ArbreGenealogique::Noeud *>::const_iterator iter = p_noeud->m_enfants.begin(); iter != p_noeud->m_enfants.end() && retour == false; iter++)
 		{
@@ -174,7 +173,7 @@ const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeu
 	}
 	for(std::list<ArbreGenealogique::Noeud *>::const_iterator iter = p_noeud->m_enfants.begin(); iter != p_noeud->m_enfants.end() && retour == false; iter++)
 	{
-		if (this->sontEgaux(p_personne_it->first, (*iter)->m_personne_it->first))
+		if (p_personne_it ==  (*iter)->m_personne_it)
 		{
 			retour = true;
 		}
@@ -182,21 +181,15 @@ const bool ArbreGenealogique::appartient(const ArbreGenealogique::Noeud * p_noeu
 	return retour;
 }
 
-
-const bool ArbreGenealogique::sontEgaux(const Personne& p_personneA, const Personne& p_personneB)
-{
-	return (!(p_personneA < p_personneB) && !(p_personneB < p_personneA));
-}
-
 ArbreGenealogique::Noeud * ArbreGenealogique::trouverPositionEntree(ArbreGenealogique::Noeud * p_departRecherche, const ArbreGenealogique::pEntree p_personne_it) const
 {
 	Noeud* retour = NULL;
 
-	if (this->sontEgaux(p_departRecherche->m_personne_it->first, p_personne_it->first))
+	if (p_departRecherche->m_personne_it == p_personne_it)
 	{
 		retour = p_departRecherche;
 	}
-	else if (p_personne_it->first.reqDateNaissance() > p_departRecherche->m_personne_it->first.reqDateNaissance()) // La personne rechercher est encore plus jeune.
+	else
 	{
 		for(std::list<ArbreGenealogique::Noeud *>::const_iterator iter = p_departRecherche->m_enfants.begin(); iter != p_departRecherche->m_enfants.end() && retour == NULL; iter++)
 		{

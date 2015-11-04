@@ -30,7 +30,7 @@ bool Personne::operator <(const Personne & p_personne) const
 	return 
 		   (this->reqNom() <  p_personne.reqNom()) ||
 		   (this->reqNom() == p_personne.reqNom() && this->reqPrenom() < p_personne.reqPrenom()) ||
-		   (this->reqNom() == p_personne.reqNom() && this->reqPrenom() == p_personne.reqPrenom() && this->reqDateNaissance() > p_personne.reqDateNaissance()) ;
+		   (this->reqNom() == p_personne.reqNom() && this->reqPrenom() == p_personne.reqPrenom() && this->reqDateNaissance() < p_personne.reqDateNaissance()) ;
 }
 
 //! \brief surcharge de l'opérateur << d'écriture dans une ostream

@@ -65,10 +65,6 @@ Annuaire::Annuaire(std::ifstream & p_fichierEntree)
 				nouvelleArbre.ajouterEnfant(iteratorParent,iteratorEnfant);
 				this->m_listeArbreGene.push_front(nouvelleArbre);
 			}
-			/*if (!arbreEnfantExiste && parent.reqNom() != enfant.reqNom())
-			{
-				this->m_listeArbreGene.push_front(ArbreGenealogique(iteratorEnfant));
-			}*/
 		}
 		else if (ligneLu != "")
 		{
@@ -141,7 +137,6 @@ void Annuaire::ajouterParentEnfant(const Personne & p_parent,
 		ArbreGenealogique arbre =  ArbreGenealogique(entreeParent);
 		arbre.ajouterEnfant(entreeParent,entreeEnfant);
 		this->m_listeArbreGene.push_front(arbre);
-
 	}
 
 }
