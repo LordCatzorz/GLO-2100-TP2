@@ -14,7 +14,6 @@
 #include <stdexcept>
 #include "Personne.h"
 #include "Adresse.h"
-#include "ContratException.h";
 
 /**
  * \class ArbreGenealogique

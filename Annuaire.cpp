@@ -19,6 +19,11 @@ using namespace std;
 //! \exception	logic_error si le fichier p_fichierEntree n'est pas ouvert correctement.
 Annuaire::Annuaire(std::ifstream & p_fichierEntree)
 {
+	if (!p_fichierEntree.good())
+	{
+		throw logic_error("Le fichier p_fichierEntree n'est pas ouvert correctement");
+	}
+
 	this->m_listeArbreGene = list<ArbreGenealogique>();
 	do
 	{
@@ -106,15 +111,13 @@ void Annuaire::inscrire(const Personne & p_personne, const Adresse& p_adresse)
 void Annuaire::ajouterParentEnfant(const Personne & p_parent,
 								   const Personne & p_enfant)
 {
-	PRECONDITION(this->m_bottin.find(p_parent) != this->m_bottin.end());
-	PRECONDITION(this->m_bottin.find(p_enfant) != this->m_bottin.end());
-
 	std::map<Personne,Adresse>::iterator entreeParent = this->m_bottin.find(p_parent);
-	std::map<Personne,Adresse>::iterator entreeEnfant = this->m_bottin.find(p_enfant);
 	if (entreeParent == this->m_bottin.end())
 	{
 		throw logic_error("Le parent n'existe pas dans le bottin");
 	}
+	
+	std::map<Personne,Adresse>::iterator entreeEnfant = this->m_bottin.find(p_enfant);
 	if (entreeEnfant == this->m_bottin.end())
 	{
 		throw logic_error("L'enfant n'existe pas dans le bottin");
@@ -127,7 +130,6 @@ void Annuaire::ajouterParentEnfant(const Personne & p_parent,
 		trouve = iter->reqNom() == p_parent.reqNom();
 	}
 
-	
 	if (trouve)
 	{
 		iter->ajouterEnfant(entreeParent, entreeEnfant);
@@ -146,12 +148,15 @@ void Annuaire::ajouterParentEnfant(const Personne & p_parent,
 //! \param[in] p_annuaire l'annuaire a sortir.
 //! \pre l'annuaire n'est pas vide
 //! \param[out] p_out le flux de sortie contenant l'annuaire .
-//! \exception exception_name Description des raisons de l'exception (peut en avoir plusieurs ou aucune).
+//! \exception logic_error Le bottin est vide
 //! \return un flux de sortie pour les appel en cascade.
 std::ostream & operator <<(std::ostream & p_out, const Annuaire & p_annuaire)
 {
-	PRECONDITION(!p_annuaire.m_bottin.empty());
-	p_out << "bottin : " << std::endl;
+	if(p_annuaire.m_bottin.empty())
+	{
+		throw logic_error("Le bottin est vide");
+	}
+	p_out << std::endl << "bottin : " << std::endl;
 	for(std::map<Personne, Adresse>::const_iterator iter = p_annuaire.m_bottin.begin();iter != p_annuaire.m_bottin.end(); iter++)
 	{
 		p_out << std::endl << iter->first <<endl << iter->second;
@@ -165,9 +170,13 @@ std::ostream & operator <<(std::ostream & p_out, const Annuaire & p_annuaire)
 	return p_out;
 }
 
-
+//! \brief Convertion simple de string en int.
+//! \param[in] p_string la string a convertir.
+//! \return le résultat de l'opérateur >> de stringsteam qui devrait être le int du texte si valide
+//! \sa std::stringsteam.operator>>
 int Annuaire::convertirStringInt(std::string p_string)
 {
+	std::stringstream ss;
 	int entier = 0;
 	std::stringstream(p_string) >> entier;
 	return entier;
