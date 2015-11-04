@@ -65,10 +65,10 @@ Annuaire::Annuaire(std::ifstream & p_fichierEntree)
 				nouvelleArbre.ajouterEnfant(iteratorParent,iteratorEnfant);
 				this->m_listeArbreGene.push_front(nouvelleArbre);
 			}
-			if (!arbreEnfantExiste && parent.reqNom() != enfant.reqNom())
+			/*if (!arbreEnfantExiste && parent.reqNom() != enfant.reqNom())
 			{
 				this->m_listeArbreGene.push_front(ArbreGenealogique(iteratorEnfant));
-			}
+			}*/
 		}
 		else if (ligneLu != "")
 		{
